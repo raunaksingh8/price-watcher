@@ -32,6 +32,8 @@ app.use((req, res, next) => {
   next();
 });
 
+console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
+
 // CORS: only allow your real frontend + local dev, not "*"
 app.use(
   cors({
