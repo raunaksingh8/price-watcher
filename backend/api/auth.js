@@ -30,7 +30,11 @@ module.exports = (app) => {
       res.status(201).json({
         message: "Acount created successfully",
         status: 201,
-        user: result.rows[0]
+        token,
+        user: {
+          name: result.rows[0].name,
+          email: result.rows[0].email,
+        },
       })
     } catch (err) {
       console.timeEnd("signup");
