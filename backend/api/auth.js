@@ -6,7 +6,7 @@ const { authlimiter } = require("../middleware/rateLimiters");
 module.exports = (app) => {
 
   // POST /api/auth/signup
-  app.post("/api/auth/signup", authlimiter, async (req, res) => {
+  app.post("/api/auth/signup", async (req, res) => {
     console.time("signup");
     const { name, email, password } = req.body;
 
@@ -67,8 +67,9 @@ module.exports = (app) => {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "7d" });
       console.timeEnd("login");
       res.status(200).json({
-        message: "Login successfull",
+        message: `Welcome Back, ${user.name.split(" ")[0]}!`,
         status: 200,
+        token,
         user: {
           name: user.name,
           email: user.email

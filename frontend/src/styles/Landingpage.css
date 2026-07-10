@@ -55,7 +55,7 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   /* The gradient lives on the page wrapper, but body needs a fallback */
-  background: #1e1b4b;
+  /* background: #1e1b4b; */
 }
 
 /* ============================================================

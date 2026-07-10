@@ -192,7 +192,7 @@ function Footer() {
                     Price<span className="logo-highlight">Dekho</span>App
                 </div>
                 <p className="footer-tagline">
-                    Compare prices. Save money. Help your community.
+                    Compare prices. Save money.
                 </p>
                 <p className="footer-copy">
                     &copy; {new Date().getFullYear()} PriceDekhoApp. All rights reserved.

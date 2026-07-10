@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
-export default function Login() {
+export default function Login({ onLogin }) {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -26,25 +28,31 @@ export default function Login() {
             const data = await res.json();
 
             if (!res.ok) {
-                setError(data.message || 'Login failed. Please try again.');
+                toast(data.message || "Login failed. Please Try Again");
                 setLoading(false);
                 return;
             }
 
-            // Store token & user info
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            toast(data.message || "Login Successfull !");
 
-            // Redirect to dashboard (or home for now)
-            navigate('/');
+            onLogin({
+                token: data.token,
+                user: data.user,
+            });
+
+            // Redirect to dashboard 
+            navigate("/dashboard", { replace: true });
         } catch (err) {
-            setError('Unable to connect to server. Please try again later.');
+            console.error("Login error:", err);
+            toast("Oops ! Unable to connect to server");
             setLoading(false);
         }
     };
 
     return (
         <div className="auth-page">
+
+            {loading && <Loader />}
             {/* Floating colour blobs */}
             <div className="blob blob--cyan" aria-hidden="true" />
             <div className="blob blob--pink" aria-hidden="true" />

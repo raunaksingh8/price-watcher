@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/Signup.css";
+import Loader from "../components/Loader";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
-export default function Signup() {
+export default function Signup({ onLogin }) {
     const navigate = useNavigate();
 
     const [name, setName] = useState("");
@@ -46,18 +47,16 @@ export default function Signup() {
             // Show backend message
             toast(data.message || "Account created successfully!");
 
-            // Save token & user
-            if (data.token) {
-                localStorage.setItem("token", data.token);
-            }
-
-            if (data.user) {
-                localStorage.setItem("user", JSON.stringify(data.user));
+            if (data.token && data.user) {
+                onLogin({
+                    token: data.token,
+                    user: data.user,
+                });
             }
 
             // Wait so the toast is visible
             setTimeout(() => {
-                navigate("/");
+                navigate("/dashboard", { replace: true });
             }, 3000);
 
         } catch (err) {
@@ -70,6 +69,9 @@ export default function Signup() {
 
     return (
         <div className="auth-page">
+
+            {loading && <Loader />}
+
             <div className="blob blob--cyan" aria-hidden="true" />
             <div className="blob blob--pink" aria-hidden="true" />
             <div className="blob blob--purple" aria-hidden="true" />
