@@ -1,0 +1,8 @@
+/* ============================================================
+   PriceDekhoApp — Signup Page Styles
+   Imports shared auth styles from Login.css, adds any overrides
+   ============================================================ */
+
+@import './Login.css';
+
+/* Any signup-specific overrides can go here */

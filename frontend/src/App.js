@@ -1,34 +1,36 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-// Replace this with your real Render backend URL once deployed.
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+import LandingPage from "./pages/Landingpage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
-  const [status, setStatus] = useState("checking...");
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+            </Routes>
 
-  useEffect(() => {
-    fetch(`${API_URL}/api/health`)
-      .then((res) => res.json())
-      .then((data) => {
-        setStatus(
-          data.status === "ok"
-            ? "✅ Backend + DB connected"
-            : `⚠️ ${data.detail}`
-        );
-      })
-      .catch(() => setStatus("❌ Backend not reachable yet"));
-  }, []);
-
-  return (
-    <div className="App">
-      <div className="card">
-        <h1>Price Watcher</h1>
-        <p>Frontend skeleton deployed. Backend status:</p>
-        <div className="status">{status}</div>
-      </div>
-    </div>
-  );
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                limit={2}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Zoom}
+            />
+        </BrowserRouter>
+    );
 }
 
 export default App;
